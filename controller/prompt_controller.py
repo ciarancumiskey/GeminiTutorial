@@ -17,7 +17,7 @@ gemini_api_client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 @prompt_router.post("/basic")
 async def basic_prompt(prompt_body: BasicPromptRequest):
     if prompt_body.model:
-        model = prompt_body.model
+        model = prompt_body.model.value
     # Default to the lite model if one's not specified
     else:
         model = "gemini-2.0-flash-lite"
