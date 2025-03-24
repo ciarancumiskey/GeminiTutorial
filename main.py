@@ -1,8 +1,11 @@
 # Required for running a FastAPI-based microservice
-from fastapi import FastAPI
 import uvicorn
+from fastapi import FastAPI
+
+from controller import prompt_controller
 
 app = FastAPI()
+app.include_router(prompt_controller.prompt_router)
 
 
 @app.get("/")
