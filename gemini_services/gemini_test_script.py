@@ -36,7 +36,8 @@ if __name__ == '__main__':
     palette_instructions = (
         "You are an experienced graphic designer. Please provide a list of hexadecimal colour codes for a "
         "particular theme in a JSON list. Do NOT include any comments or explanations for your choices, "
-        "just a list like '[#hexCode1, #hexCode2, #hexCode3]'. ")
+        "you must ONLY respond with a JSON list like this:\n"
+        "'[#hexCode1, #hexCode2, #hexCode3]'. ")
     gemini_response_text = send_n_shot_prompt(client, model, palette_instructions, n_shots, "Theme: Calsonic Skyline")
     print(gemini_response_text)
     # Chain-of-thought prompting examples
