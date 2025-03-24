@@ -4,9 +4,11 @@ import sys
 from dotenv import load_dotenv
 from google import genai
 
+from models.basic_prompt_model import ChatMessage, ChatRole
 from gemini_client import ask_close_ended_question, send_n_shot_prompt, send_text_prompt
 
-# TODO: Use dotenv to import API key
+# Add the root directory to the Python path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 if __name__ == '__main__':
     load_dotenv()
@@ -24,14 +26,14 @@ if __name__ == '__main__':
     print(gemini_response_text)
     # Experiment with few-shot prompting
     n_shots = [
-        dict(role="user", chat="Theme: Clay and Sea"),
-        dict(role="model", chat="['#C7522A', '#E5C185', '#FBF2C4', '#74A892', '#008585']"),
-        dict(role="user", chat="Theme: Pastel Vibes"),
-        dict(role="model", chat="['#D6E6FF', '#D7F9F8', '#FFFFEA', '#FFF0D4', '#FBE0E0', '#E5D4EF']"),
-        dict(role="user", chat="Theme: Moody Sunset"),
-        dict(role="model", chat="['#003F5C', '#58508D', '#BC5090', '#FF6361', '#FFA600']"),
-        dict(role="user", chat="Theme: Forest Breeze"),
-        dict(role="model", chat="['#F1DDBF', '#525E75', '#78938A', '#92BA92']")
+        ChatMessage(role=ChatRole.USER, content="Theme: Clay and Sea"),
+        ChatMessage(role=ChatRole.MODEL, content="['#C7522A', '#E5C185', '#FBF2C4', '#74A892', '#008585']"),
+        ChatMessage(role=ChatRole.USER, content="Theme: Pastel Vibes"),
+        ChatMessage(role=ChatRole.MODEL, content="['#D6E6FF', '#D7F9F8', '#FFFFEA', '#FFF0D4', '#FBE0E0', '#E5D4EF']"),
+        ChatMessage(role=ChatRole.USER, content="Theme: Moody Sunset"),
+        ChatMessage(role=ChatRole.MODEL, content="['#003F5C', '#58508D', '#BC5090', '#FF6361', '#FFA600']"),
+        ChatMessage(role=ChatRole.USER, content="Theme: Forest Breeze"),
+        ChatMessage(role=ChatRole.MODEL, content="['#F1DDBF', '#525E75', '#78938A', '#92BA92']")
     ]
     palette_instructions = (
         "You are an experienced graphic designer. Please provide a list of hexadecimal colour codes for a "

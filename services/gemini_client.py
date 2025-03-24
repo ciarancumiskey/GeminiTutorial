@@ -1,6 +1,8 @@
 from google import genai
 from google.genai import client, types
 
+from models.basic_prompt_model import ChatMessage, ChatRole
+
 
 def send_text_prompt(gemini_client: client, model: str, prompt_text: str) -> str:
     print(f"Sending prompt \"{prompt_text}\" to Gemini")
@@ -12,15 +14,15 @@ def send_text_prompt(gemini_client: client, model: str, prompt_text: str) -> str
     return response.text
 
 
-def send_n_shot_prompt(gemini_client: client, model: str, system_instructions: str, chat_history: list[dict],
+def send_n_shot_prompt(gemini_client: client, model: str, system_instructions: str, chat_history: list[ChatMessage],
                        new_user_message: str) -> str:
     print("Sending N-shot prompts to Gemini.")
 
     contents = []
     for sample_chat in chat_history:
         contents.append(genai.types.Content(
-            parts=[{'text': sample_chat.get("chat")}],
-            role=sample_chat.get("role")
+            parts=[{'text': sample_chat.content}],
+            role=sample_chat.role.value
         ))
     generate_content_config = types.GenerateContentConfig(
         temperature=1,
