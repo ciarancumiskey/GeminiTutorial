@@ -1,30 +1,22 @@
 import os
 import sys
 
+from dotenv import load_dotenv
 from google import genai
 
 from gemini_client import ask_close_ended_question, send_n_shot_prompt, send_text_prompt
 
-# TODO: Get API key
-# TODO: Hide API key, maybe make it a CLI param
-# TODO: connect to Gemini API
+# TODO: Use dotenv to import API key
 
 if __name__ == '__main__':
+    load_dotenv()
     text_prompt = ""
     try:
         text_prompt = sys.argv[1]
     except IndexError:
         print("Text prompt was not supplied, quitting.")
         sys.exit(1)
-    api_key = ""
-    try:
-        api_key = sys.argv[2]
-    except IndexError:
-        print("Defaulting to API key saved to environment.")
-        api_key = os.environ.get("gcpTrainingApiKey")
-        if api_key is None or api_key.strip() == '':
-            print("No API key found in environment or command line arguments.")
-            sys.exit(1)
+    api_key = os.getenv("GEMINI_API_KEY")
     client = genai.Client(api_key=api_key)
     # Default to lite as the model
     model = "gemini-2.0-flash-lite"
