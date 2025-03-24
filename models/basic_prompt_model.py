@@ -3,6 +3,16 @@ from enum import Enum
 from pydantic import BaseModel
 
 
+class ChatRole(Enum):
+    USER = "user"
+    MODEL = "model"
+
+
+class ChatMessage(BaseModel):
+    role: ChatRole
+    content: str
+
+
 class GeminiModel(Enum):
     FLASH_2_0 = "gemini-2.0-flash"
     FLASH_LITE_2_0 = "gemini-2.0-flash-lite"
@@ -14,6 +24,8 @@ class GeminiModel(Enum):
     IMAGEN_3 = "imagen-3.0-generate-002"
 
 
-class BasicPromptRequest(BaseModel):
+class PromptRequest(BaseModel):
     prompt: str
     model: GeminiModel = GeminiModel.FLASH_LITE_2_0
+    chat_history: list[ChatMessage] | None = None
+    instructions: str | None = None
