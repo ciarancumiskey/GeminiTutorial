@@ -11,7 +11,7 @@ def send_text_prompt(gemini_client: client, model: str, prompt_text: str) -> str
         model=model,
         contents=prompt_text
     )
-    return response.text
+    return response.text.rstrip()
 
 
 def send_n_shot_prompt(gemini_client: client, model: str, system_instructions: str, chat_history: list[ChatMessage],
@@ -37,7 +37,7 @@ def send_n_shot_prompt(gemini_client: client, model: str, system_instructions: s
         config=generate_content_config,
         history=contents)
     response = new_chat.send_message(new_user_message)
-    return response.text
+    return response.text.rstrip()
 
 
 def ask_close_ended_question(gemini_client: client, model: str, new_user_message: str) -> str:
@@ -52,4 +52,4 @@ def ask_close_ended_question(gemini_client: client, model: str, new_user_message
         model=model,
         config=generate_content_config)
     response = new_chat.send_message(new_user_message)
-    return response.text
+    return response.text.rstrip()
